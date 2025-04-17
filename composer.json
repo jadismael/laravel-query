@@ -1,0 +1,47 @@
+{
+    "$schema": "https://getcomposer.org/schema.json",
+    "name": "jadismael/laravel-query",
+    "type": "library",
+    "description": "Lightweight query builder for Laravel: filters, sorts, includes",
+    "keywords": ["laravel", "query-builder", "filters", "sorting", "includes"],
+    "license": "MIT",
+    "require": {
+        "php": "^8.2",
+        "laravel/framework": "^12.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.75",
+        "laravel/sail": "^1.41",
+        "mockery/mockery": "^1.6",
+        "orchestra/testbench": "^10.2",
+        "phpstan/phpstan": "^2.1",
+        "phpunit/phpunit": "^11.5.3",
+        "symplify/easy-coding-standard": "^12.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jadismael\\LaravelQuery\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Jadismael\\LaravelQuery\\LaravelQueryServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "optimize-autoloader": true
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    }
+}

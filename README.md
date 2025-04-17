@@ -52,7 +52,7 @@ $projects = LaravelQuery::fetch(
     sorts: ['name' => 'asc'],
     includes: [],
     fields: ['name', 'description']
-)->get();
+);
 ```
 
 > `fetch()` returns an Eloquent query builder, allowing further chaining or pagination.

@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
-use PhpCsFixer\Fixer\Import\NoUnusedImportsFixer;
-use PhpCsFixer\Fixer\ListNotation\ListSyntaxFixer;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocNoEmptyReturnFixer;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocSummaryFixer;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocAddMissingParamAnnotationFixer;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocOrderFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 
 return ECSConfig::configure()
@@ -11,21 +14,23 @@ return ECSConfig::configure()
         __DIR__ . '/src',
         __DIR__ . '/tests',
     ])
-
-    ->withPhpCsFixerSets(perCS20: true, doctrineAnnotation: true, psr12: true, phpCsFixer: true)
-    // add a single rule
-    ->withRules([
-        NoUnusedImportsFixer::class,
-        ListSyntaxFixer::class,
-    ])
-
-    // add sets - group of rules
-   // ->withPreparedSets(
-        // arrays: true,
-        // namespaces: true,
-        // spaces: true,
-        // docblocks: true,
-        // comments: true,
-    // )
-     
-     ;
+    ->withPhpCsFixerSets(
+        perCS20: true,
+        doctrineAnnotation: true,
+        psr12: true,
+        phpCsFixer: false // 👈 this set includes docblock fixers
+    )
+    ->withPreparedSets(
+        arrays: true,
+        namespaces: true,
+        spaces: true,
+        docblocks: false, // 👈 disable docblock rules
+        comments: true,
+    )
+    ->withSkip([
+        // these rules are likely causing @internal and @coversNothing:
+        PhpCsFixer\Fixer\Phpdoc\PhpdocNoEmptyReturnFixer::class,
+        PhpCsFixer\Fixer\Phpdoc\PhpdocAddMissingParamAnnotationFixer::class,
+        PhpCsFixer\Fixer\Phpdoc\PhpdocSummaryFixer::class,
+        PhpCsFixer\Fixer\Phpdoc\PhpdocOrderFixer::class,
+    ]);

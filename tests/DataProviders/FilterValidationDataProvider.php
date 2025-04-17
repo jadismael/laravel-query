@@ -1,13 +1,11 @@
 <?php
 
-
 namespace Tests\DataProviders;
 
 class FilterValidationDataProvider
 {
     public static function all(): array
     {
-
         return [
             'valid filter' => [
                 ['equals'],
@@ -23,9 +21,9 @@ class FilterValidationDataProvider
                     'operator' => 'equals',
                     'value' => 'active',
                     'isDate' => false,
-                ]]
+                ]],
             ],
-    
+
             'invalid operator' => [
                 ['equals'],
                 [[
@@ -35,9 +33,9 @@ class FilterValidationDataProvider
                     'isDate' => false,
                 ]],
                 ['status'],
-                []
+                [],
             ],
-    
+
             'invalid column' => [
                 ['equals'],
                 [[
@@ -47,9 +45,9 @@ class FilterValidationDataProvider
                     'isDate' => false,
                 ]],
                 ['status'],
-                []
+                [],
             ],
-    
+
             'invalid between value' => [
                 ['between'],
                 [[
@@ -59,9 +57,9 @@ class FilterValidationDataProvider
                     'isDate' => false,
                 ]],
                 ['age'],
-                []
+                [],
             ],
-    
+
             'valid null operator' => [
                 ['null'],
                 [[
@@ -76,8 +74,8 @@ class FilterValidationDataProvider
                     'operator' => 'null',
                     'value' => null,
                     'isDate' => false,
-                ]]
+                ]],
             ],
         ];
-}
+    }
 }

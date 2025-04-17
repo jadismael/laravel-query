@@ -1,5 +1,7 @@
 <?php
+
 namespace Jadismael\LaravelQuery\Services;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;
 
@@ -31,6 +33,7 @@ class ModelInspector
 
             if (str_contains((string) $castType, ':')) {
                 $baseCastType = explode(':', $castType, 2)[0];
+
                 return in_array($baseCastType, $dateCastTypesOrPrefixes, true);
             }
 

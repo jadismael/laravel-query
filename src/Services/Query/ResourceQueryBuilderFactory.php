@@ -1,4 +1,5 @@
 <?php
+
 namespace Jadismael\LaravelQuery\Services\Query;
 
 use Illuminate\Database\Eloquent\Model;
@@ -8,12 +9,12 @@ class ResourceQueryBuilderFactory
     public function make(string $resourceClass): ResourceQueryBuilder
     {
         // Check if the resource class is a valid Eloquent model
-        if (!class_exists($resourceClass)) {
+        if (! class_exists($resourceClass)) {
             throw new \InvalidArgumentException("Resource class {$resourceClass} does not exist.");
         }
 
         // Check if the resource class is an Eloquent model
-        if (!is_subclass_of($resourceClass, Model::class)) {
+        if (! is_subclass_of($resourceClass, Model::class)) {
             throw new \InvalidArgumentException("{$resourceClass} is not a valid Eloquent model.");
         }
 
@@ -24,6 +25,8 @@ class ResourceQueryBuilderFactory
             throw new \InvalidArgumentException("{$resourceClass} is not a valid Eloquent model.");
         }
 
-        return app(ResourceQueryBuilder::class, ['model' => $model]);
+        return app(ResourceQueryBuilder::class, [
+            'model' => $model,
+        ]);
     }
 }

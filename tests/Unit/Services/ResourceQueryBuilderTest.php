@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Tests\Unit\Services;
-
 
 use Jadismael\LaravelQuery\Services\ModelInspector;
 use Jadismael\LaravelQuery\Services\Query\QueryFilters;
@@ -10,13 +8,13 @@ use Jadismael\LaravelQuery\Services\Query\ResourceQueryBuilder;
 use Jadismael\LaravelQuery\Services\Query\ResourceQueryExecutor;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\DataProviders\ResourceQueryFilterDataProvider;
-use Tests\TestCase;
-use Mockery;
 use Tests\Models\Post;
+use Tests\TestCase;
 
 class ResourceQueryBuilderTest extends TestCase
 {
     protected ResourceQueryBuilder $builder;
+
     protected ResourceQueryExecutor $executor;
 
     protected function setUp(): void
@@ -27,16 +25,18 @@ class ResourceQueryBuilderTest extends TestCase
         $queryFilter = app(QueryFilters::class);
 
         // Mock the model inspector
-        $mockInspector = Mockery::mock(ModelInspector::class);
+        $mockInspector = \Mockery::mock(ModelInspector::class);
         $mockInspector
             ->shouldReceive('getColumns')
             ->with($model)
-            ->andReturn(['name', 'email', 'status', 'score', 'priority', 'archived', 'created_at']);
+            ->andReturn(['name', 'email', 'status', 'score', 'priority', 'archived', 'created_at'])
+        ;
 
         $mockInspector
             ->shouldReceive('getDateColumns')
             ->with($model)
-            ->andReturn(['created_at']);
+            ->andReturn(['created_at'])
+        ;
 
         // Build ResourceQueryBuilder with mocks
         $this->builder = new ResourceQueryBuilder($model, $queryFilter, $mockInspector);
@@ -47,33 +47,33 @@ class ResourceQueryBuilderTest extends TestCase
 
     protected function tearDown(): void
     {
-        Mockery::close();
+        \Mockery::close();
         parent::tearDown();
     }
 
     #[DataProvider('queryDataProvider')]
-    public function test_it_builds_expected_query(
+    public function testItBuildsExpectedQuery(
         array $filters,
         array $sorts,
         array $includes,
         array $fields,
-        string $expectedSql
+        string $expectedSql,
     ): void {
         $query = $this->builder->build(
             filters: $filters,
             sorts: $sorts,
             includes: $includes,
-            fields: $fields
+            fields: $fields,
         );
 
         $actualSql = $this->executor->getRawSql($query);
 
-        $normalize = fn($sql) => str_replace(['"', '`', "'"], '', $sql);
+        $normalize = fn ($sql) => str_replace(['"', '`', "'"], '', $sql);
 
         $this->assertEquals(
             $normalize($expectedSql),
             $normalize($actualSql),
-            'SQL queries are not equal after normalization.'
+            'SQL queries are not equal after normalization.',
         );
     }
 

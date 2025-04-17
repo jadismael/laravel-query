@@ -1,10 +1,12 @@
 <?php
-// tests/TestCaseWithDatabase.php
-namespace Tests;
-use Illuminate\Support\Facades\Schema;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+// tests/TestCaseWithDatabase.php
+
+namespace Tests;
+
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Schema;
 
 abstract class TestCaseWithDatabase extends TestCase
 {
@@ -23,13 +25,13 @@ abstract class TestCaseWithDatabase extends TestCase
             $table->string('name');
         });
 
-            Schema::connection('sqlite')->create('posts', function (Blueprint $table) {
+        Schema::connection('sqlite')->create('posts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('author_id')->constrained('authors');
             $table->string('title');
         });
-    
-             Schema::connection('sqlite')->create('comments', function (Blueprint $table) {
+
+        Schema::connection('sqlite')->create('comments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('post_id')->constrained('posts');
             $table->string('body');

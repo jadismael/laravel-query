@@ -1,17 +1,16 @@
 <?php
+
 namespace Jadismael\LaravelQuery\Services\Query;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use ReflectionMethod;
-use InvalidArgumentException;
 
 class QueryInclude
 {
     public function __construct(
         protected Model $model,
-        protected bool $strict = false // 👈 Optional toggle
+        protected bool $strict = false, // 👈 Optional toggle
     ) {}
 
     public function apply(Builder $query, array $includes): Builder
@@ -22,7 +21,7 @@ class QueryInclude
             if ($this->isValidNestedRelation($this->model, $include)) {
                 $validIncludes[] = $include;
             } elseif ($this->strict) {
-                throw new InvalidArgumentException("Invalid include path: '{$include}'");
+                throw new \InvalidArgumentException("Invalid include path: '{$include}'");
             }
         }
 
@@ -32,6 +31,7 @@ class QueryInclude
     public function isValidNestedRelation(Model $model, string $path): bool
     {
         $parts = explode('.', $path);
+
         return $this->validateNestedRelation($parts, $model);
     }
 
@@ -40,11 +40,11 @@ class QueryInclude
         $currentModel = $baseModel;
 
         foreach ($relationParts as $relation) {
-            if (!method_exists($currentModel, $relation)) {
+            if (! method_exists($currentModel, $relation)) {
                 return false;
             }
 
-            $reflection = new ReflectionMethod($currentModel, $relation);
+            $reflection = new \ReflectionMethod($currentModel, $relation);
 
             if ($reflection->getNumberOfParameters() > 0) {
                 return false;
@@ -56,7 +56,7 @@ class QueryInclude
                 return false;
             }
 
-            if (!$relationInstance instanceof Relation) {
+            if (! $relationInstance instanceof Relation) {
                 return false;
             }
 

@@ -1,0 +1,40 @@
+name: Run Tests
+
+on:
+  push:
+    branches: ["*"]
+  pull_request:
+    branches: ["*"]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, pdo, pdo_mysql
+          coverage: xdebug
+
+      - name: Install dependencies
+        run: |
+          composer install --prefer-dist --no-interaction
+
+      - name: Prepare SQLite for testing
+        run: |
+          mkdir -p database
+          touch database/testing.sqlite
+
+      - name: Run tests
+        run: |
+          vendor/bin/phpunit tests
+          
+      - name: Run ECS check
+        run: |
+          vendor/bin/ecs check 

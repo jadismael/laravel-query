@@ -2,5 +2,4 @@
 
 return [
     'strict_mode' => false,
-   
 ];

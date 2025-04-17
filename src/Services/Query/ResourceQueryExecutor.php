@@ -1,9 +1,10 @@
 <?php
+
 namespace Jadismael\LaravelQuery\Services\Query;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Collection;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
 
 class ResourceQueryExecutor
 {
@@ -14,7 +15,7 @@ class ResourceQueryExecutor
 
     public function paginate(Builder $query, int $perPage = 15, ?int $page = null)
     {
-        if ($page !== null) {
+        if (null !== $page) {
             Paginator::currentPageResolver(fn () => $page);
         }
 
@@ -25,7 +26,7 @@ class ResourceQueryExecutor
     {
         return vsprintf(
             str_replace('?', "'%s'", $query->toSql()),
-            $query->getBindings()
+            $query->getBindings(),
         );
     }
 }

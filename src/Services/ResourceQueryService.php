@@ -1,19 +1,20 @@
 <?php
+
 namespace Jadismael\LaravelQuery\Services;
 
+use Illuminate\Database\Eloquent\Model;
 use Jadismael\LaravelQuery\Services\Query\ResourceQueryBuilderFactory;
 use Jadismael\LaravelQuery\Services\Query\ResourceQueryExecutor;
-use Illuminate\Database\Eloquent\Model;
-
 
 class ResourceQueryService
 {
     protected Model $model;
 
-    public function __construct(protected ResourceQueryBuilderFactory $builderFactory, protected ResourceQueryExecutor $queryExecutor)
-    {
-    
-    }
+    public function __construct(
+        protected ResourceQueryBuilderFactory $builderFactory,
+        protected ResourceQueryExecutor $queryExecutor,
+    ) {}
+
     public function fetch(
         string $resourceClass,
         array $filters = [],
@@ -21,7 +22,7 @@ class ResourceQueryService
         array $includes = [],
         array $fields = [],
         ?int $paginate = null,
-        ?int $page = null
+        ?int $page = null,
     ) {
         $builder = $this->builderFactory->make($resourceClass);
 
@@ -29,12 +30,11 @@ class ResourceQueryService
             filters: $filters,
             sorts: $sorts,
             includes: $includes,
-            fields: $fields
+            fields: $fields,
         );
 
         return $paginate
             ? $this->queryExecutor->paginate($query, $paginate, $page)
             : $this->queryExecutor->get($query);
     }
-  
 }

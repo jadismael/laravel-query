@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -8,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Post extends Model
 {
     public $timestamps = false;
+
     protected $fillable = ['title', 'author_id'];
 
     public function comments(): HasMany

@@ -1,6 +1,7 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
     "name": "jadismael/laravel-query",
+    "version": "0.1.0",
     "type": "library",
     "description": "Lightweight query builder for Laravel: filters, sorts, includes",
     "keywords": ["laravel", "query-builder", "filters", "sorting", "includes"],
@@ -10,7 +11,6 @@
         "laravel/framework": "^12.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.75",
         "laravel/sail": "^1.41",
         "mockery/mockery": "^1.6",
         "orchestra/testbench": "^10.2",
@@ -18,6 +18,20 @@
         "phpunit/phpunit": "^11.5.3",
         "symplify/easy-coding-standard": "^12.5"
     },
+
+    "support": {
+        "issues": "https://github.com/jadismael/laravel-query/issues",
+        "source": "https://github.com/jadismael/laravel-query/"
+    },
+    "authors": [
+        {
+            "name": "Jad Ismail",
+            "email": "JadIsmail@ultgate.com",
+            "homepage": "https://www.linkedin.com/in/jad-ismail/",
+            "role": "Developer"
+        }
+    ],
+    
     "autoload": {
         "psr-4": {
             "Jadismael\\LaravelQuery\\": "src/"
@@ -32,7 +46,10 @@
         "laravel": {
             "providers": [
                 "Jadismael\\LaravelQuery\\LaravelQueryServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "LaravelQuery" : "Jadismael\\LaravelQuery\\Facades\\LaravelQuery"
+            }
         }
     },
     "minimum-stability": "stable",

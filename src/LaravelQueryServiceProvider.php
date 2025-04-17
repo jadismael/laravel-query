@@ -47,12 +47,8 @@ class LaravelQueryServiceProvider extends ServiceProvider
                 $params['model'],
                 $app->make(QueryFilters::class),
                 $app->make(ModelInspector::class),
-                $app->make(QuerySort::class, [
-                    'modelColumns' => $params['modelColumns'],
-                ]),
-                $app->make(QueryInclude::class, [
-                    'model' => $params['model'],
-                ]),
+       
+        
             );
         });
 
@@ -61,7 +57,10 @@ class LaravelQueryServiceProvider extends ServiceProvider
         });
 
         $this->app->bind(ResourceQueryService::class, function ($app) {
-            return new ResourceQueryService($app->make(ResourceQueryBuilderFactory::class, []), $app->make(ResourceQueryExecutor::class));
+            return new ResourceQueryService(
+                $app->make(ResourceQueryBuilderFactory::class),
+                $app->make(ResourceQueryExecutor::class)
+            );
         });
 
         // Merge default configuration (optional)
